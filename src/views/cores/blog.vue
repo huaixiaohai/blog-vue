@@ -14,7 +14,7 @@
           </transition>
           <div class="row-content">
                 <article-item v-on:thumbclick="thumbSubmit" :article-list="rowitem"></article-item>
-                <article-page :current-page="currentPage" :page-all="currentPageAll" v-on:pageprocss="pageProcss"></article-page>
+                <article-page :current-page="listQuery.page" :page-all="(Math.ceil(totalCount/listQuery.limit))" v-on:pageprocss="pageProcss"></article-page>
           </div>
         </div>
       </div>
@@ -40,13 +40,12 @@ export default {
   data () {
     return {
       tagShowFlag: false,
-      currentPage: 1, // 当前页
-      currentPageAll: 3, // 总页数
       tagList: [],
       rowitem: [],
+      totalCount: 0, //
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 5
       }
     }
   },
@@ -65,6 +64,9 @@ export default {
     articleList () {
       articleList(this.listQuery).then(response => {
         this.rowitem = response.data.items
+        this.totalCount = response.data.total
+        this.listQuery.page = response.data.page
+        this.listQuery.limit = response.data.limit
         this.rowitem.forEach(item => {
           item.photoUrl = require('../../assets/image/article/Vuejs1.jpg');
           item.time = '2018-06-26 16:50'
@@ -75,8 +77,11 @@ export default {
       alert('您点赞了');
     },
     pageProcss (data) {
-      alert(`消息是：${data.message}
-        您使用了分页功能，点击后当前页数为${data.current}，您可以在这里写翻页的逻辑。`);
+      // alert(`消息是：${data.message}
+      //   您使用了分页功能，点击后当前页数为${data.current}，您可以在这里写翻页的逻辑。`);
+      console.log(data.current)
+      this.listQuery.page = data.current;
+      this.articleList();
     }
   }
 }
