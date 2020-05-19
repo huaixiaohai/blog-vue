@@ -8,7 +8,7 @@
             <div v-show="tagShowFlag" class="tag-wall shadow">
               <div class="tag-wall-head">标签墙</div>
               <div class="tag-wall-body">
-                <a v-for="tagItem in tagList" class="tag" :href="'/blog/'+tagItem.tagName">{{tagItem.tagName}}</a>
+                <a v-for="(tagItem, index) in tagList" :key=index class="tag" :href="'/blog/'+tagItem.tagName">{{tagItem.tagName}}</a>
               </div>
             </div>
           </transition>
@@ -26,6 +26,7 @@
 import blogFoot from '@/views/components/blog-foot';
 import articleItem from '@/views/components/article-item';
 import articlePage from '@/views/components/article-page';
+import { articleList } from '@/api/article'
 
 import config from '@/config/blog-config.json';
 
@@ -42,19 +43,33 @@ export default {
       currentPage: 1, // 当前页
       currentPageAll: 3, // 总页数
       tagList: [],
-      rowitem: []
+      rowitem: [],
+      listQuery: {
+        page: 1,
+        limit: 20
+      }
     }
   },
   created () {
     this.init();
+    this.articleList();
   },
   methods: {
     init () {
       this.tagList = config.data.detail['tagList'].concat();
-      this.rowitem = JSON.parse(JSON.stringify(config.data.article['articleList']));
-      this.rowitem.forEach(item => {
-        item.photoUrl = require('../../' + item.photoUrl);
-      });
+      // this.rowitem = JSON.parse(JSON.stringify(config.data.article['articleList']));
+      // this.rowitem.forEach(item => {
+      //   item.photoUrl = require('../../' + item.photoUrl);
+      // });
+    },
+    articleList () {
+      articleList(this.listQuery).then(response => {
+        this.rowitem = response.data.items
+        this.rowitem.forEach(item => {
+          item.photoUrl = require('../../assets/image/article/Vuejs1.jpg');
+          item.time = '2018-06-26 16:50'
+        });
+      })
     },
     thumbSubmit () {
       alert('您点赞了');

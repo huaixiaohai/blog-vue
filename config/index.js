@@ -8,9 +8,18 @@ module.exports = {
   dev: {
 
     // Paths
+    env: require('./dev.env'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'http://127.0.0.1:10000/', // 设置你调用的接口域名和端口号
+        changeOrigin: true, // 跨域
+        pathRewrite: {
+          // '^/api': '/'         
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

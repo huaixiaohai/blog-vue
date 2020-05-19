@@ -4,8 +4,12 @@ import router from './router'
 import 'font-awesome/css/font-awesome.css'
 import './main.css'// 可复用的CSS全局的CSS文件
 import loading from '@/views/components/loading'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = false
+
+Vue.use(ElementUI)
 
 /* 因为vue路由route-view的滚动条共享的原因(bug)，所以在这里如果滚动条置顶的话会交互不友好（明显的上滑动作），所以在这路由拦截 */
 /* 引入了加载动作的实现，由于为了平衡掉动画带来的影响，所以在afterEach钩子里面写了延迟函数，为了一个流畅的过渡效果 */

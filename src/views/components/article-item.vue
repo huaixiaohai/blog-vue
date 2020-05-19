@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item,$key) in articleList" class="content-item">
+    <div v-for="(item,$key) in articleList" :key=$key class="content-item">
         <div class="rowitem-left">
             <img style="cursor:pointer;" @click="jump(item.id)" :src="item.photoUrl">
         </div>
@@ -17,7 +17,7 @@
         <div class="rowitem-foot">
             <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{item.time.split(' ')[0]}}&nbsp;&nbsp;&nbsp; <i class="fa fa-user" aria-hidden="true"></i> {{item.author}}</span>
             <span class="article_taglist">
-              <a :href="'/blog/'+taglistItem" v-for="taglistItem in articleTaglist[$key]" class="tag">{{taglistItem}}</a>
+              <a :href="'/blog/'+taglistItem" v-for="(taglistItem, index) in articleTaglist[$key]" :key=index class="tag">{{taglistItem}}</a>
             </span>
             <span class="rowitem-foot-span">
                 <a :style="item.thumbUpStatus?'color:#de686d':''" @click="thumbupClick(item.article,$key)" class="thumbup" href="javascript:;">

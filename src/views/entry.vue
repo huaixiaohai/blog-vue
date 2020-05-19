@@ -2,7 +2,7 @@
   <div :style="viewBackstyle" :class="currentRoute.isOpacityFull?'opacity-full':''" class="view" ref="view">
     <div v-if="isShowNavMain" class="main-nav">
         <ul>
-          <li v-for="nav in navList">
+          <li v-for="(nav, i) in navList" :key=i>
             <router-link :to="nav.router" replace>{{nav.name}}</router-link>
           </li>
         </ul>
