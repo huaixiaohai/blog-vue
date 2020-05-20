@@ -6,11 +6,13 @@
           <detail-nav-bar></detail-nav-bar>
           <div class="detail-head">
             <div class="detail-title">
-              <h1>Vue插件开发初体验——（懒加载）</h1>
+              <h1> {{articleDetail.title}} </h1>
             </div>
             <hr />
           </div>
-          <div v-html="markdownHtmlTest" class="markdown-body">
+          <div class="markdown-body">
+            <!-- {{this.articleDetail}} -->
+            <p v-html=this.articleDetail.content></p>
           </div>
         </div>
         <div class="thumb-for">
@@ -59,6 +61,8 @@ import content from '../../assets/content.txt';
 import markdown from '../../assets/css/markdown/markdown.css';
 import config from '@/config/blog-config.json';
 
+import { fetchArticle } from '@/api/article'
+
 export default {
   name: 'blog-detail',
   components: {
@@ -97,13 +101,27 @@ export default {
           route: 'javascript:;'
         }
       ],
-      tagList: []
+      tagList: [],
+
+      articleDetail: {
+        status: '', // 文章状态
+        title: '', // 文章题目
+        content: '', // 文章内容
+        summary: '', // 文章摘要
+        author: '',
+        display_time: undefined,
+        id: undefined,
+        importance: 0
+      }
     }
   },
   created () {
+    const id = this.$route.params && this.$route.params.articleId
+
     let converter = new showdown.Converter();
     this.markdownHtmlTest = converter.makeHtml(this.content);
     this.init();
+    this.getArticleDetail(id)
   },
   methods: {
     init () {
@@ -126,6 +144,13 @@ export default {
     getComment () {
       alert('这里通过请求获取了评论信息，通过isGetComment标识来判断是否显示请求的数据与此按钮');
       this.isGetComment = !this.isGetComment;
+    },
+    getArticleDetail (id) {
+      fetchArticle(id).then(response => {
+        this.articleDetail = response.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
