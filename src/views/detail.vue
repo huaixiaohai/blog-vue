@@ -1,53 +1,57 @@
 <template>
   <div>
-    <div :style="viewBackstyle" :class="current.class">
-      <div class="title"><h1>{{title}}</h1>
-        <h2 v-if="current.id === 'blog-detail'" class="title-h2 tagsArr">
-          <a v-for="item in tagsArr" href="javascript:;" class="tag">{{item}}</a>
-        </h2>
+    <div :style="viewBackstyle" :class="detailConfig.class">
+      <div class="title"><h1>{{articleDetail.title}}</h1>
+        <!-- <h2 v-if="detailConfig.id === 'blog-detail'" class="title-h2 tagsArr">
+          <a v-for="(item, index) in tags" :key=index href="javascript:;" class="tag">{{item}}</a>
+        </h2> -->
         <h2 class="title-h2">
-          <span ><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{author}}</span><br /><br />
+          <span ><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{articleDetail.author}}</span><br /><br />
           <span class="title-h2-date">
-            <i aria-hidden="true" class="fa fa-calendar-o"></i> &nbsp;{{time}}</span>
+            <i aria-hidden="true" class="fa fa-calendar-o"></i> &nbsp;{{articleDetail.time}}</span>
         </h2>
         <h3 class="title-h3">
           <span class="title-h3-view">
-            <i class="fa fa-eye" aria-hidden="true"></i> view {{readCount}}
+            <i class="fa fa-eye" aria-hidden="true"></i> view {{articleDetail.readCount}}
           </span>
           <span>
             <a class="title-h3-comment" href="#comment">
-              <i class="fa fa-comments-o" aria-hidden="true"></i> comment {{commentCount}}
+              <i class="fa fa-comments-o" aria-hidden="true"></i> comment {{articleDetail.commentCount}}
             </a>
           </span>
           <br>
         </h3>
       </div>
     </div>
-    <router-view/>
+    <router-view :detailData="detailData"></router-view>
   </div>
 </template>
 
 <script>
 import config from '@/config/blog-config.json'
+import { fetchArticle } from '@/api/article'
 
 export default {
   name: 'detail',
   data () {
     return {
+      detailData: null,
       viewBackstyle: {
         backgroundImage: ''
       },
-      currentType: '',
-      detailList: [],
-      articleList: [],
-      lifeList: [],
-      current: null,
-      title: '',
-      tagsArr: null,
-      author: '',
-      time: '',
-      readCount: -1,
-      commentCount: -1
+      detailConfig: null,
+      articleDetail: {
+        id: undefined, // 文章id
+        status: '', // 文章状态
+        title: '', // 文章题目
+        content: '', // 文章内容
+        summary: '', // 文章摘要
+        author: '', // 作者name
+        create_time: 0, // 创建时间
+        readCount: -1, // 阅读数量
+        commentCount: -1, // 评论数量
+        photoUrl: '' // 图片的url
+      }
     }
   },
   created () {
@@ -58,51 +62,37 @@ export default {
   },
   methods: {
     init () {
-      this.getConfig();
-      this.current = this.getCurrentRoute();
-      if (this.current.id == 'blog-detail') {
+      if (this.$route.name == config.page.detail.blog.id) {
+        this.detailConfig = config.page.detail.blog
         this.getArticleDetail();
-      } else if (this.current.id == 'life-detail') {
+      } else if (this.$route.name == config.page.detail.life.id) {
+        detailConfig = config.page.detail.life
         this.getLifeDetail();
       }
     },
-    getConfig () {
-      this.detailList = config.page.detail;
-      this.articleList = config.data.article['articleList'];
-      this.lifeList = config.data.life['lifeList'];
-    },
-    getCurrentRoute () {
-      const id = this.$route.name;
-      let current = this.detailList.find(item => {
-        return item.id === id;
-      });
-      return current;
-    },
     getArticleDetail () {
       let articleId = this.$route.params.articleId;
-      let article = this.articleList.find(item => {
-        return item.id == articleId
-      });
-      this.title = article.title;
-      this.viewBackstyle.backgroundImage = `url(${require('../' + article.photoUrl)})`;
-      this.tagsArr = article.tag.split(',');
-      this.author = article.author;
-      this.time = article.time;
-      this.readCount = article.articleRead;
-      this.commentCount = article.commentCount;
+      fetchArticle(articleId).then(response => {
+        this.articleDetail = response.data
+        // this.viewBackstyle.backgroundImage = `url(${require()})`;
+        this.viewBackstyle.backgroundImage = `url(${require('../assets/image/article/Vuejs1.jpg')})`;
+        this.detailData = this.articleDetail
+      }).catch(err => {
+        console.log(err)
+      })
     },
     getLifeDetail () {
-      let lifeId = this.$route.params.lifeId;
-      let life = this.lifeList.find(item => {
-        return item.id == lifeId
-      });
-      console.log(life);
-      this.title = life.title;
-      this.viewBackstyle.backgroundImage = `url(${require('../' + life.photo)})`;
-      this.author = life.author;
-      this.time = life.time;
-      this.readCount = life.read;
-      this.commentCount = life.thumb;
+      // let lifeId = this.$route.params.lifeId;
+      // let life = this.lifeList.find(item => {
+      //   return item.id == lifeId
+      // });
+      // console.log(life);
+      // this.title = life.title;
+      // this.viewBackstyle.backgroundImage = `url(${require('../' + life.photo)})`;
+      // this.author = life.author;
+      // this.time = life.time;
+      // this.readCount = life.read;
+      // this.commentCount = life.thumb;
     }
   }
 

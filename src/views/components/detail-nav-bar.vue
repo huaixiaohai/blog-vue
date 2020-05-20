@@ -39,7 +39,7 @@
         <a href="javascript:scroll(0,0)">目录</a>
       </div>
       <ul class="guide-list">
-        <li :class="Hitem.class" v-for="Hitem in list">
+        <li :class="Hitem.class" v-for="(Hitem, index) in list" :key=index>
           <a @click="toggleGuide($event)" :href="Hitem.href">{{Hitem.title}}</a>
         </li>
       </ul>
@@ -116,11 +116,14 @@ export default {
             href: '#' + $(this).text(),
             class: 'guide-list-h' + flag
           }
+          console.log('============')
+          console.log(hobj)
           _self.push(hobj);
           $(this).attr('id', $(this).text());
       });
     },
     toggleGuide (event) {
+      console.log('toogleGuide');
         if (event.view.innerWidth < 768) {
             this.guidestyleTop.top = '-' + ($('.content-guide').height() + 50) + 'px';
         }

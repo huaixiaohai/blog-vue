@@ -67,19 +67,20 @@
 		    "titleClass": "title-blog"
 		  }
 		],
-    "detail": [
-      {
+    "detail": {
+      "blog": {
         "id": "blog-detail",
         "name": "博文",
         "router": "/",
         "class": "view-detail"
-      }, {
+      }, 
+      "life": {
         "id": "life-detail",
         "name": "生活博文",
         "router": "/life",
         "class": "view-detail-life"
       }
-    ]
+    }
 	},
   "data": {
     "article": {
