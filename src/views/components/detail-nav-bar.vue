@@ -77,6 +77,7 @@ export default {
     }
   },
   mounted () {
+    console.log('detail-nav-bar :   mounted');
     this.init();
   },
   beforeDestroy () {
@@ -85,7 +86,7 @@ export default {
   },
   methods: {
     init () {
-      this.guide();
+      // this.guide();
       this.fullScreenChange();
       document.addEventListener('scroll', this.listenProcess);
       this.isPhone = isPhone();
@@ -108,27 +109,27 @@ export default {
       }
     },
     guide () {
+      this.list = []
       var _self = this.list;
-      $('.content-detail > h2,h3,h4').each(function (index, obj) {
-          var flag = $(obj)[0].tagName.replace('H', '');
-          var hobj = {
-            title: $(this).text(),
-            href: '#' + $(this).text(),
-            class: 'guide-list-h' + flag
-          }
-          console.log('============')
-          console.log(hobj)
-          _self.push(hobj);
-          $(this).attr('id', $(this).text());
+      // $('.content-detail > h2,h3,h4').each(function (index, obj) {
+      $('#content-detail').find('h1,h2,h3,h4,h5').each(function (index, obj) {
+        var flag = $(obj)[0].tagName.replace('H', '');
+        var hobj = {
+          title: $(this).text(),
+          href: '#' + $(this).text(),
+          class: 'guide-list-h' + flag
+        }
+        _self.push(hobj);
+        $(this).attr('id', $(this).text());
       });
     },
     toggleGuide (event) {
-      console.log('toogleGuide');
-        if (event.view.innerWidth < 768) {
-            this.guidestyleTop.top = '-' + ($('.content-guide').height() + 50) + 'px';
-        }
-        this.styleFlag = !this.styleFlag;
-        this.stylePositionFlag = !this.stylePositionFlag;
+      this.guide();
+      if (event.view.innerWidth < 768) {
+          this.guidestyleTop.top = '-' + ($('.content-guide').height() + 50) + 'px';
+      }
+      this.styleFlag = !this.styleFlag;
+      this.stylePositionFlag = !this.stylePositionFlag;
     },
     returnTop () {
       (function smoothscroll () {

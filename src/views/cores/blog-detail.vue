@@ -3,7 +3,6 @@
     <div class="row">
       <div class="col-md-12 col-sm-12">
         <div id="content-detail" ref="content-detail" class="content-detail content">
-          <detail-nav-bar></detail-nav-bar>
           <div class="detail-head">
             <div class="detail-title">
               <h1> {{articleDetail.title}} </h1>
@@ -14,6 +13,7 @@
             <!-- {{this.articleDetail}} -->
             <p v-html=this.articleDetail.content></p>
           </div>
+          <detail-nav-bar ref='detailNavBar'></detail-nav-bar>
         </div>
         <!-- <div class="thumb-for"> -->
           <!-- thumbs-count传递的是点赞的数量，thumbs-up-flag传递的是当前用户是否点赞的标识 -->

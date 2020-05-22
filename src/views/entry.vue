@@ -1,11 +1,13 @@
 <template>
   <div :style="viewBackstyle" :class="currentRoute.isOpacityFull?'opacity-full':''" class="view" ref="view">
     <div v-if="isShowNavMain" class="main-nav">
-        <ul>
+        <!-- <ul>
           <li v-for="(nav, i) in navList" :key=i>
             <router-link :to="nav.router" replace>{{nav.name}}</router-link>
           </li>
-        </ul>
+        </ul> -->
+        <!-- <header style="padding-top:6px;" class="introduce-title">
+      </header> -->
     </div>
     <div class="introduce-title">
         <h1>{{currentRoute.title}}</h1>
@@ -16,7 +18,18 @@
             {{currentRoute.desc}}
           </p>
         </div>
-
+        <h1>我是一名96年coder
+          <span>
+            <br />
+            <p class="header-desc-p" v-for="(desc,i) in descList" :key=i >
+              {{desc}}
+            </p>
+            <br />
+          </span>
+          <span style="font-size:14px;font-weight:500;margin-top:40px;">
+            —— 欢迎你！第 <font style="font-size:34px;">{{count}}</font> 位访问的游客 ——
+          </span>
+        </h1>
     </div>
     <router-view/>
   </div>
@@ -69,6 +82,8 @@ export default {
       let current = this.textMessage.find(item => {
         return item.name === routeName;
       });
+      console.log('entry: getCurrentrouter')
+      console.log(current)
       return current;
     },
     // 获取新路由的对应页面的相关信息，包括页面标题，页面描述，页面背景图和页面的透明度样式

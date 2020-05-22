@@ -1,30 +1,16 @@
 <template>
   <div id="view-body" class="view-body view-body-main">
     <div style="text-align:center" class="container">
-      <header style="padding-top:6px;" class="codrops-header">
-        <h1>{{title}}
-          <span>
-            <br />
-            <p class="header-desc-p" v-for="desc in descList">
-              {{desc}}
-            </p>
-            <br />
-          </span>
-          <span style="font-size:14px;font-weight:500;margin-top:40px;">
-            —— 欢迎你！第 <font style="font-size:34px;">{{count}}</font> 位访问的游客 ——
-          </span>
-        </h1>
-      </header>
-    <div class="grid">
-      <figure v-for="figure in figureList" :class="figure.style">
-          <img :src="figure.image" alt="图片在此"/>
-          <figcaption>
-              <h2 v-html="figure.title"></h2>
-              <p v-html="figure.desc"></p>
-              <a :href="figure.router">View more</a>
-          </figcaption>
-      </figure>
-    </div>
+      <div class="grid">
+        <figure v-for="(figure, i) in figureList"  :key=i :class="figure.style">
+            <img :src="figure.image" alt="图片在此"/>
+            <figcaption>
+                <h2 v-html="figure.title"></h2>
+                <p v-html="figure.desc"></p>
+                <a :href="figure.router">View more</a>
+            </figcaption>
+        </figure>
+      </div>
   </div>
   <blog-foot></blog-foot>
 </div>

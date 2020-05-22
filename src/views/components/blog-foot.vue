@@ -1,17 +1,17 @@
 <template>
   <div class="footNote">
     <p>
-      <span> Copyright </span><span>©</span><span> 2017 </span>
-      <a href="/"> blog </a>
-      <span>By Tangyida</span><span></span>
+      <span> Copyright </span><span>©</span><span> 2020 </span>
+      <a href="/"> Blog </a>
+      <span>By Alien</span><span></span>
     </p>
-    <p class="friendly-link">友情链接: <a v-for="link in friendlyLink" :href="link.website">{{link.name}}</a>&nbsp;&nbsp;
+    <!-- <p class="friendly-link">友情链接: <a v-for="(link, i) in friendlyLink" :key=i :href="link.website">{{link.name}}</a>&nbsp;&nbsp; -->
       <!-- <a href="https://www.ailoli.org/">Ailoli</a>&nbsp;&nbsp;
       <a href="https://aoaoao.me/">树洞</a> -->
-    </p>
-    <p>
+    <!-- </p> -->
+    <!-- <p>
       <a href="http://www.miibeian.gov.cn/" target="_blank">浙ICP备17057362号-1</a>
-    </p>
+    </p> -->
   </div>
 </template>
 

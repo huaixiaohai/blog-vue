@@ -4,7 +4,19 @@
       {
   	    "name": "技术杂谈",
   	    "router": "/blog"
-      }
+      }, 
+      {
+  	    "name": "生活",
+  	    "router": "/life"
+      }, 
+      {
+  	    "name": "关于我",
+  	    "router": "/contact"
+  	  },
+    	{
+  	    "name": "留言墙",
+  	    "router": "/contact#leave_message"
+  	  }
   	],
     "navList": [{
       "name": "主页",
@@ -15,15 +27,25 @@
       "name": "技术分享",
       "href": "/blog",
       "icon": "assets/image/icon/article.svg"
+    },
+    {
+      "name": "关于生活",
+      "href": "/life",
+      "icon": "assets/image/icon/video.svg"
+    },
+    {
+      "name": "联系我",
+      "href": "/contact",
+      "icon": "assets/image/icon/phone.svg"
     }]
   },
 	"page": {
 		"entryPage": [
 	  	{
 		    "name": "index",
-		    "title": "Alien的博客",
+		    "title": "我是唐益达",
 		    "desc": "很高兴能遇见你",
-		    "backgroundImage": "assets/image/background/header-bg.jpg",
+		    "backgroundImage": "assets/image/background/9.jpg",
 		    "isOpacityFull": true
 		  }, {
 		    "name": "contact",
