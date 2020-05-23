@@ -18,6 +18,7 @@
 
 <script>
 import blogFoot from '@/views/components/blog-foot'
+import config from '@/config/blog-config.json'
 
 export default {
   name: 'index',
@@ -26,35 +27,15 @@ export default {
   },
   data () {
     return {
-      count: 500,
-      figureList: [{
-        title: '留言墙',
-        desc: '留 下 你 的 足 迹。',
-        image: require('../../assets/image/1.jpg'),
-        router: '/contact#leave_message',
-        style: 'effect-lily'
-      }, {
-        title: '技术 <span>杂谈</span>',
-        desc: '在 技 术 上，<br>时 刻 保 持 谦 虚。',
-        image: require('../../assets/image/2.jpg'),
-        router: '/blog',
-        style: 'effect-sadie'
-      }, {
-        title: '生活 <span>分享</span>',
-        desc: '喜 欢 有 趣 的 生 活。',
-        image: require('../../assets/image/8.jpg'),
-        router: '/life',
-        style: 'effect-oscar'
-      }, {
-        title: '关 于  <span>我</span>',
-        desc: '我 知 道，你 很 想 遇 见 我。',
-        image: require('../../assets/image/cj0.jpeg'),
-        router: '/contact',
-        style: 'effect-marley'
-      }],
-      title: '我是一名95年生的coder',
-      descList: ['一名刚刚毕业的菜鸟小码农，热爱生活，喜欢设计，', '严谨，强迫症，爱玩，爱电影，爱运动', '这是我的地盘，分享技术经验，生活琐事，见闻趣事。']
+      figureList: config.figureList
     }
+  },
+  created () {
+      this.figureList.forEach(item => {
+        console.log(item.image)
+        item.image = require('../../' + item.image)
+        console.log(item.image)
+      });
   },
   methods: {
 

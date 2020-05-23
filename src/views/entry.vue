@@ -1,14 +1,5 @@
 <template>
   <div :style="viewBackstyle" :class="currentRoute.isOpacityFull?'opacity-full':''" class="view" ref="view">
-    <div v-if="isShowNavMain" class="main-nav">
-        <!-- <ul>
-          <li v-for="(nav, i) in navList" :key=i>
-            <router-link :to="nav.router" replace>{{nav.name}}</router-link>
-          </li>
-        </ul> -->
-        <!-- <header style="padding-top:6px;" class="introduce-title">
-      </header> -->
-    </div>
     <div class="introduce-title">
         <h1>{{currentRoute.title}}</h1>
         <p class="subline">{{currentRoute.desc}}</p>
@@ -21,13 +12,13 @@
         <h1>我是一名96年coder
           <span>
             <br />
-            <p class="header-desc-p" v-for="(desc,i) in descList" :key=i >
+            <!-- <p class="header-desc-p" v-for="(desc,i) in descList" :key=i >
               {{desc}}
-            </p>
+            </p> -->
             <br />
           </span>
           <span style="font-size:14px;font-weight:500;margin-top:40px;">
-            —— 欢迎你！第 <font style="font-size:34px;">{{count}}</font> 位访问的游客 ——
+            <!-- —— 欢迎你！第 <font style="font-size:34px;">{{count}}</font> 位访问的游客 —— -->
           </span>
         </h1>
     </div>
@@ -48,7 +39,6 @@ export default {
         backgroundImage: ''
       },
       currentRoute: null,
-      navList: [],
       // 主页面入口中各个页面的详细信息
       textMessage: [],
       pageTitle: '',
@@ -63,7 +53,6 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.routerChange(from, to);
       this.getTitleDetails();
     }
   },
@@ -71,11 +60,9 @@ export default {
     // 获取config的各个数据配置
     getConfig () {
       this.textMessage = config.page.entryPage;
-      this.navList = config.nav.mainNav;
     },
     init () {
       this.getTitleDetails();
-      this.routerChange(null, this.$route);
     },
     getCurrentRoute () {
       const routeName = this.$route.name;
@@ -92,9 +79,6 @@ export default {
       this.currentRoute = current;
       this.viewBackstyle.backgroundImage = `url(${require('../' + current.backgroundImage)})`;
       console.log(this.viewBackstyle);
-    },
-    routerChange (oldRoute, newRoute) {
-      newRoute.name != 'index' ? (this.isShowNavMain = false) : (this.isShowNavMain = true)
     }
   }
 }

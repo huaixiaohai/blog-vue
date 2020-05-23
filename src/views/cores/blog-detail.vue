@@ -10,7 +10,6 @@
             <hr />
           </div>
           <div class="markdown-body">
-            <!-- {{this.articleDetail}} -->
             <p v-html=this.articleDetail.content></p>
           </div>
           <detail-nav-bar ref='detailNavBar'></detail-nav-bar>
