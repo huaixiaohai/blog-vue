@@ -61,11 +61,10 @@ export default {
     return {
       articleDetail: {
         id: undefined, // 文章id
-        status: '', // 文章状态
         title: '', // 文章题目
         content: '', // 文章内容
         summary: '', // 文章摘要
-        author: '', // 作者name
+        author: undefined, // 作者name
         create_time: 0, // 创建时间
         readCount: -1, // 阅读数量
         commentCount: -1, // 评论数量
