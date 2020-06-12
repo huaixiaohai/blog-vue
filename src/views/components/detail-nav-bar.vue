@@ -10,7 +10,7 @@
           data-toggle="tooltip"
           data-placement="right"
           title="文章导航">
-            <img ref="guideImg" src="@/assets/image/icon/guide.png">
+            <img ref="guideImg" src="../../assets/image/icon/guide.png">
           </a>
         </li>
         <li>
@@ -21,7 +21,7 @@
            data-toggle="tooltip"
            data-placement="right"
            title="返回顶部">
-            <img src="@/assets/image/icon/top.svg">
+            <img src="../../assets/image/icon/top.svg">
           </a>
         </li>
         <li>
@@ -62,8 +62,8 @@ export default {
       isFullScreen: false,
       isPhone: false,
       isShowReturnTop: false,
-      readImage: require('@/assets/image/icon/reading.svg'),
-      closeFullImage: require('@/assets/image/icon/closeFull.svg'),
+      readImage: require('../../assets/image/icon/reading.svg'),
+      closeFullImage: require('../../assets/image/icon/closeFull.svg'),
       tooltipFlag: false,
       styleFlag: false,
       stylePositionFlag: false,
