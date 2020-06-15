@@ -2,7 +2,7 @@
   <div>
     <div v-for="(item,$key) in articleList" :key=$key class="content-item">
         <div class="rowitem-left">
-            <img style="cursor:pointer;" @click="jump(item.id)" :src="item.photoUrl">
+            <img style="cursor:pointer;" @click="jump(item.id)" :src="item.image">
         </div>
         <div class="rowitem-right">
             <div class="rowitem-title">
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="rowitem-foot">
-            <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{item.time.split(' ')[0]}}&nbsp;&nbsp;&nbsp; <i class="fa fa-user" aria-hidden="true"></i> {{item.author}}</span>
+            <span><i class="fa fa-clock-o" aria-hidden="true"></i> {{formatDate(item.timestamp*1000)}}&nbsp;&nbsp;&nbsp; <i class="fa fa-user" aria-hidden="true"></i> {{getAuthorName(item.authorId)}}</span>
             <span class="article_taglist">
               <a :href="'/blog/'+taglistItem" v-for="(taglistItem, index) in articleTaglist[$key]" :key=index class="tag">{{taglistItem}}</a>
             </span>
@@ -38,8 +38,10 @@
 </template>
 
 <script>
+import {formatDate} from '../../utils/utils';
+
 export default {
-  props: ['articleList'],
+  props: ['articleList', 'authorList'],
   name: 'article-item',
   data () {
     return {
@@ -54,6 +56,9 @@ export default {
     });
   },
   methods: {
+    formatDate: function (date) {
+      return formatDate(date)
+    },
     thumbupClick: function (id, index) {
       this.$emit('thumbclick', {
         articleId: id,
@@ -62,9 +67,18 @@ export default {
     },
     jump: function (id) {
       window.open('/detail/' + id);
+    },
+    getAuthorName: function (authorID) {
+      let name = ''
+      this.authorList.forEach(item => {
+        if (item.id == authorID) {
+          name = item.name
+          return true
+        }
+      })
+      return name
     }
   }
-
 }
 </script>
 

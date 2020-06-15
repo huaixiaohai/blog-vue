@@ -15,3 +15,10 @@ export function fetchArticle (id) {
     params: { id }
   })
 }
+
+export function getAuthorList () {
+  return request({
+    url: '/api/search/author/list',
+    method: 'get'
+  })
+}

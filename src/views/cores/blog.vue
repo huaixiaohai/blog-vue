@@ -13,7 +13,7 @@
             </div>
           </transition>
           <div class="row-content">
-                <article-item v-on:thumbclick="thumbSubmit" :article-list="rowitem"></article-item>
+                <article-item v-on:thumbclick="thumbSubmit" :article-list="rowitem" :author-list="authorList"></article-item>
                 <article-page :current-page="listQuery.page" :page-all="(Math.ceil(totalCount/listQuery.limit))" v-on:pageprocss="pageProcss"></article-page>
           </div>
         </div>
@@ -26,7 +26,7 @@
 import blogFoot from '@/views/components/blog-foot';
 import articleItem from '@/views/components/article-item';
 import articlePage from '@/views/components/article-page';
-import { articleList } from '@/api/article'
+import { articleList, getAuthorList } from '@/api/article'
 
 import config from '@/config/blog-config.json';
 
@@ -42,6 +42,7 @@ export default {
       tagShowFlag: false,
       tagList: [],
       rowitem: [],
+      authorList: [], // id, name
       totalCount: 0, //
       listQuery: {
         page: 1,
@@ -52,6 +53,7 @@ export default {
   created () {
     this.init();
     this.articleList();
+    this.getAuthorList();
   },
   methods: {
     init () {
@@ -71,6 +73,11 @@ export default {
           item.photoUrl = require('../../assets/image/article/Vuejs1.jpg');
           item.time = '2018-06-26 16:50'
         });
+      })
+    },
+    getAuthorList () {
+      getAuthorList().then(response => {
+        this.authorList = response.data.items
       })
     },
     thumbSubmit () {
