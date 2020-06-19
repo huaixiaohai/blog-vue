@@ -6,9 +6,9 @@
           <a v-for="(item, index) in tags" :key=index href="javascript:;" class="tag">{{item}}</a>
         </h2> -->
         <h2 class="title-h2">
-          <span ><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{articleDetail.author}}</span><br /><br />
+          <span ><i class="fa fa-user" aria-hidden="true"></i> &nbsp;{{getAuthorName(articleDetail.authorId)}}</span><br /><br />
           <span class="title-h2-date">
-            <i aria-hidden="true" class="fa fa-calendar-o"></i> &nbsp;{{articleDetail.time}}</span>
+            <i aria-hidden="true" class="fa fa-calendar-o"></i> &nbsp;{{formatDate(articleDetail.timestamp*1001)}}</span>
         </h2>
         <h3 class="title-h3">
           <span class="title-h3-view">
@@ -29,7 +29,8 @@
 
 <script>
 import config from '@/config/blog-config.json'
-import { fetchArticle } from '@/api/article'
+import { fetchArticle, getAuthorList } from '@/api/article'
+import {formatDate} from '../utils/utils';
 
 export default {
   name: 'detail',
@@ -51,7 +52,8 @@ export default {
         readCount: -1, // 阅读数量
         commentCount: -1, // 评论数量
         photoUrl: '' // 图片的url
-      }
+      },
+      authorList: [] // id, name
     }
   },
   created () {
@@ -62,6 +64,7 @@ export default {
   },
   methods: {
     init () {
+      this.getAuthorList();
       if (this.$route.name == config.page.detail.blog.id) {
         this.detailConfig = config.page.detail.blog
         this.getArticleDetail();
@@ -70,13 +73,31 @@ export default {
         this.getLifeDetail();
       }
     },
+    formatDate: function (date) {
+      return formatDate(date)
+    },
+    getAuthorList () {
+      getAuthorList().then(response => {
+        this.authorList = response.data.items
+      })
+    },
+    getAuthorName: function (authorID) {
+      let name = ''
+      this.authorList.forEach(item => {
+        if (item.id == authorID) {
+          name = item.name
+          return true
+        }
+      })
+      return name
+    },
     getArticleDetail () {
       let articleId = this.$route.params.articleId;
       fetchArticle(articleId).then(response => {
         this.articleDetail = response.data
         // this.viewBackstyle.backgroundImage = `url(${require()})`;
-        this.viewBackstyle.backgroundImage = `url(${require('../assets/image/article/Vuejs1.jpg')})`;
         this.detailData = this.articleDetail
+        this.viewBackstyle.backgroundImage = `url(${this.detailData.image})`;
       }).catch(err => {
         console.log(err)
       })
